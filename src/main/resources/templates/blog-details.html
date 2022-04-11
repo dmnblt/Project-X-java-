@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Blog title</title>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-white">
+<header th:insert="blocks/header :: header"></header>
+<div class="container mt-5 bg-secondary">
+    <h1>Site blog</h1>
+    <div th:each="el: ${post}" class="alert alert-info mt-2 bg-secondary">
+        <h3 th:text="${el.title}"/>
+        <p th:text="${el.full_text}"/>
+        <a th:href="'/blog/' + ${el.id} + '/edit'" class="btn btn-warning">Edit</a><br><br>
+        <form th:action="'/blog/' + ${el.id} + '/remove'" method="post">
+            <button class="btn btn-warning" type="submit">Remove</button>
+        </form>
+
+
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Comments</h2>
+                <p>Treat others the way you want to be treated.<br /></p>
+            </div>
+
+            <div class="block-content">
+                <div class="alert alert-success" role="alert" th:if="${success}">
+                    New post was created!
+                </div>
+
+                <div class="faq-item">
+                    <h5 th:text="${el.title}">Lorem Ipsum dolor sit amet</h5>
+                    <div class="info">
+                <span
+                        class="text-muted">
+                    <span
+                            th:title="${el.getCreationDate()}"
+                            th:datetime="${el.getCreationDate()}"
+                            style="margin-top: 10px;">
+                        >4 hours ago by</span> by <a
+                        href="#"
+                        th:href="@{'/u/' + ${el.getUser().getUsername()}}"
+                        th:text="${post.getUser().getUsername()}"
+                        style="color: rgb(0,123,255);"
+                >John Smith</a
+                ></span
+                >
+                    </div>
+
+                    <p
+                            th:text="${post.url}"
+                            style="font-size: 16px;margin-bottom: 20px;margin-top: 10px;"
+                    >
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+                        quam urna, dignissim nec auctor in, mattis vitae leo. Lorem
+                        ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam
+                        urna, dignissim nec auctor in, mattis vitae leo.
+                    </p>
+                    <span class="d-lg-flex align-items-lg-center" th:text="|All ${post.getComments().size()} comments:|"
+                    ><i
+                            class="icon-bubbles"
+                            style="margin-right: 7px;font-size: 20px;"
+                    ></i
+                    >0 Comments</span
+                    >
+
+                    <form sec:authorize="isAuthenticated()" id="frmAddComment" method="POST" th:action="@{/post/comments}" th:object="${comment}">
+                        <input type="hidden" th:field="*{el}"/>
+                        <div class="form-group">
+                            <textarea class="form-control" id="comment" rows="3" th:field="*{body}"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" >Add Comment</button>
+                    </form>
+
+                    <hr />
+                </div>
+                <div class="faq-item" th:each="comment : ${el.getComments()}">
+                    <div id="comment" class="answer" style="padding: 15px;">
+                <span
+                        class="text-muted" style="margin-top: 10px;margin-bottom: 20px;font-size: 15px;">
+                    <span th:title="${comment.getCreationDate()}"
+                          th:datetime="${comment.}" th:text="${comment.getPrettyTime()}"
+
+                    >4 hours ago by</span> by <a
+                        href="#"
+                        style="color: rgb(0,123,255);" th:text="${comment.getCreatedBy()}"
+                >John Smith</a
+                ></span
+                >
+                        <p th:text="${comment.getBody()}"
+                           style="color: rgba(0,0,0,0.93);margin: 0;margin-top: 10px;font-size: 15px;"
+                        >
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+                            quam urna, dignissim nec auctor in, mattis vitae leo. Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit.&nbsp;Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<div th:insert="blocks/footer :: footer"></div>
+
+</body>
+</html>
