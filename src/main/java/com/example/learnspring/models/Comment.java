@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Comment extends Auditable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

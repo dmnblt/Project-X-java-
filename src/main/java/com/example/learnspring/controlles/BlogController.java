@@ -26,9 +26,7 @@ import java.util.Optional;
 public class BlogController {
     @Autowired
     private PostRepository postRepository;
-
     private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
-
     private PostService postService;
     private CommentRepository commentRepository;
 

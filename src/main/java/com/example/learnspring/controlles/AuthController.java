@@ -15,7 +15,6 @@ import java.security.Permission;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-
     @Autowired
     private UserRepository userRepo;
 

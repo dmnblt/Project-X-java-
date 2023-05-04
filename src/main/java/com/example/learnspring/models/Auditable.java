@@ -33,7 +33,6 @@ public abstract class Auditable {
 
     @CreatedBy
     private String createdBy;
-
     @CreatedDate
     private LocalDateTime creationDate;
 

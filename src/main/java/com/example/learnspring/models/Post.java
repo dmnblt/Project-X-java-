@@ -18,7 +18,6 @@ public class Post extends Auditable{
         comments.add(comment);
     }
 
-
     @ManyToOne      // Relationship. Many posts can belong to one user.
     private Users user;
 
